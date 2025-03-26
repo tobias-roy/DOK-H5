@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>122.jpeg</filename>
+	<path>C:\Users\tobia\source\repos\H5\tf2\models\research\object_detection\images\train\122.jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>600</width>
+		<height>416</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Uboat</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>21</xmin>
+			<ymin>37</ymin>
+			<xmax>595</xmax>
+			<ymax>383</ymax>
+		</bndbox>
+	</object>
+</annotation>

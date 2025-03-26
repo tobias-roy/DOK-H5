@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>38.jpeg</filename>
+	<path>C:\Users\tobia\source\repos\H5\tf2\models\research\object_detection\images\train\38.jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>366</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Bulker</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>37</xmin>
+			<ymin>36</ymin>
+			<xmax>788</xmax>
+			<ymax>268</ymax>
+		</bndbox>
+	</object>
+</annotation>
