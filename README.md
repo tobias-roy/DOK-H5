@@ -119,7 +119,7 @@ tar.extractall('.')
 tar.close()
 ```
 In case you get a red underline on wget you need to install it in your environment.
-- In your Anaconda prompt run ```pip install wget=3.2```
+- In your Anaconda prompt run ```pip install wget==3.2```
 
 The code above is pointing to the faster_rcnn_resnet50_v1_640x640_coco17_tpu.8 model. You can choose whatever Tensorflow 2 Object Detection model you would like to use.
 The [Model Zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md) containts a list of all models we can use.
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     run_inference(detection_model, category_index, args.image_path)
 ```
 
-- In your Anaconda Prompt make sure you're in the *models/research/object_detection/* folder
+- In your Anaconda Prompt make sure you're in the *models/research/object_detection* folder
 - Run the model downloader script ```python model_downloader.py```
 
 - Make sure the following command points to the model you just downloaded and then run
@@ -509,10 +509,10 @@ You should be prompted with a succesful message
 	Change it higher or lower and compare the outputs. Too high a number can cause overtraining.
 
 - Change the *input_path* of the *train_input_reader* to the path of the *train.record*
-	ie. *research/object_detection/train.record*
+	ie. *train.record*
 
 - Change the *input_path* of the *eval_input_reader* to the path of the test.record
-	ie. *research/object_detection/test.record*
+	ie. *test.record*
 	
 - Create a file in the *object_detection* directory named *labelmap.pbtxt*
 	In that file you need to create a label map which is a structure of the labels you used for your images.
