@@ -192,7 +192,8 @@ function buildDetectedObjects(scores: any, threshold: any, boxes: any, classes: 
 async function loadModel() {
   let model: any;
   try {
-    model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/H5/refs/heads/MachineLearning/AngularTensorflowJS/model/ship-detector-resnet50/model.json', {onProgress: (number) => console.log(number)})
+    // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/H5/refs/heads/MachineLearning/AngularTensorflowJS/model/ship-detector-resnet50/model.json', {onProgress: (number) => console.log(number)})
+    model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/tfjsconvertv3/model.json', {onProgress: (number) => console.log(number)})
   } catch (error) {
     console.log('Error loading model:', error);
   }
