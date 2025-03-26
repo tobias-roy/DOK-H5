@@ -1,0 +1,32 @@
+item {
+    id: 1
+    name: 'Aircraft carrier'
+}
+item {
+    id: 2
+    name: 'Destroyer'
+}
+item {
+    id: 3
+    name: 'Sailboat'
+}
+item {
+    id: 4
+    name: 'Pirate boat'
+}
+item {
+    id: 5
+    name: 'Bulker'
+}
+item {
+    id: 6
+    name: 'Uboat'
+}
+item {
+    id: 7
+    name: 'Container ship'
+}
+item {
+    id: 8
+    name: 'Cruise ship'
+}
