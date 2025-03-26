@@ -509,10 +509,10 @@ You should be prompted with a succesful message
 	Change it higher or lower and compare the outputs. Too high a number can cause overtraining.
 
 - Change the *input_path* of the *train_input_reader* to the path of the *train.record*
-	ie. *research/object_detection/train.record*
+	ie. *train.record*
 
 - Change the *input_path* of the *eval_input_reader* to the path of the test.record
-	ie. *research/object_detection/test.record*
+	ie. *test.record*
 	
 - Create a file in the *object_detection* directory named *labelmap.pbtxt*
 	In that file you need to create a label map which is a structure of the labels you used for your images.
