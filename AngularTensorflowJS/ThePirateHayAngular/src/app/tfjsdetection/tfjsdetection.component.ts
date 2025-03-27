@@ -31,36 +31,44 @@ export class TfjsdetectionComponent implements OnInit {
     //Define the classes for detection
     classesDir = {
       1: {
-        name: 'Aircraft carrier',
+        name: 'Aircraft Carrier',
         id: 1
       },
       2: {
-        name: 'Destroyer',
+        name: 'Bulkers',
         id: 2
       },
       3: {
-        name: 'Sailboat',
+        name: 'Car Carrier',
         id: 3
       },
       4: {
-        name: 'Pirate boat',
+        name: 'Container Ship',
         id: 4
       },
       5: {
-        name: 'Bulker',
+        name: 'Cruise',
         id: 5
       },
       6: {
-        name: 'Uboat',
+        name: 'DDG',
         id: 6
       },
       7: {
-        name: 'Container ship',
+        name: 'Recreational',
         id: 7
       },
       8: {
-        name: 'Cruise ship',
+        name: 'Sailboat',
         id: 8
+      },
+      9: {
+        name: 'Submarine',
+        id: 9
+      },
+      10: {
+        name: 'Tug',
+        id: 10
       }
     }
 
@@ -194,13 +202,14 @@ function buildDetectedObjects(scores: any, threshold: any, boxes: any, classes: 
 async function loadModel() {
   let model: any;
   try {
-    // Cannot load duen to WebGL cap
+    // Cannot load due to WebGL cap
     // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/tfjsconvertv3/model.json', {onProgress: (number) => console.log(number)})
     // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/d0Convert/model.json', {onProgress: (number) => console.log(number)})
     // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/H5/refs/heads/MachineLearning/AngularTensorflowJS/model/ship-detector-resnet50/model.json', {onProgress: (number) => console.log(number)})
 
+    model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/mobilenetV1/model.json', {onProgress: (number) => console.log(number)})
+    // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/inference_graph/mobilenetV1_V3/tfjsconvert/model.json', {onProgress: (number) => console.log(number)})
 
-    // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/mobilenetV1/model.json', {onProgress: (number) => console.log(number)})
 
   } catch (error) {
     console.log('Error loading model:', error);

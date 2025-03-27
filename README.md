@@ -478,8 +478,9 @@ if __name__ == '__main__':
 
 - In your Anaconda Prompt from the *object_detection* directory run the following two commands to generate the tfrecords
 
-python generate_tfrecord.py --csv_input=images/test_labels.csv --image_dir=images/test --output_path=test.record
-python generate_tfrecord.py --csv_input=images/train_labels.csv --image_dir=images/train --output_path=train.record
+```python generate_tfrecord.py --csv_input=images/test_labels.csv --image_dir=images/test --output_path=test.record```
+
+```python generate_tfrecord.py --csv_input=images/train_labels.csv --image_dir=images/train --output_path=train.record```
 
 You should be prompted with a succesful message
 
@@ -583,7 +584,7 @@ Install Tensorflowjs in your Anaconda environment
  
 - Run the command below to convert our model
 
-```tensorflowjs_converter --input_format=tf_saved_model --output_format=tfjs_graph_model inference_graph/saved_model/saved_model.pb inference_graph/saved_model/tfjsconvert```
+```tensorflowjs_converter --input_format=tf_saved_model --output_format=tfjs_graph_model inference_graph/saved_model/ inference_graph/saved_model/tfjsconvert```
 	
  This will create a new directory and a graph model which can be used in TensorflowJS in the *inference_graph/saved_model* directory
 

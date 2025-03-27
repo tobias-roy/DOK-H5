@@ -29,22 +29,26 @@ Make sure to edit this method to match the labels you made with labelImg! n
 *************************************************************************
 '''
 def class_text_to_int(row_label):
-    if row_label == 'Aircraft carrier':
+    if row_label == 'Aircraft Carrier':
         return 1
-    elif row_label == 'Destroyer':
+    elif row_label == 'Bulkers':
         return 2
-    elif row_label == 'Sailboat':
+    elif row_label == 'Car Carrier':
         return 3
-    elif row_label == 'Pirate boat':
+    elif row_label == 'Container Ship':
         return 4
-    elif row_label == 'Bulker':
+    elif row_label == 'Cruise':
         return 5
-    elif row_label == 'Uboat':
+    elif row_label == 'DDG':
         return 6
-    elif row_label == 'Container ship':
+    elif row_label == 'Recreational':
         return 7
-    elif row_label == 'Cruise ship':
+    elif row_label == 'Sailboat':
         return 8
+    elif row_label == 'Submarine':
+        return 9
+    elif row_label == 'Tug':
+        return 10
     else:
         return None
 

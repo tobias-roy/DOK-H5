@@ -1,5 +1,3 @@
-# based on https://github.com/datitran/raccoon_dataset/blob/master/xml_to_csv.py
-
 import os
 import glob
 import pandas as pd
@@ -36,4 +34,3 @@ def main():
 
 
 main()
-

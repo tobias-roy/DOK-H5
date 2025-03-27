@@ -1,32 +1,40 @@
 item {
     id: 1
-    name: 'Aircraft carrier'
+    name: 'Aircraft Carrier'
 }
 item {
     id: 2
-    name: 'Destroyer'
+    name: 'Bulkers'
 }
 item {
     id: 3
-    name: 'Sailboat'
+    name: 'Car Carrier'
 }
 item {
     id: 4
-    name: 'Pirate boat'
+    name: 'Container Ship'
 }
 item {
     id: 5
-    name: 'Bulker'
+    name: 'Cruise'
 }
 item {
     id: 6
-    name: 'Uboat'
+    name: 'DDG'
 }
 item {
     id: 7
-    name: 'Container ship'
+    name: 'Recreational'
 }
 item {
     id: 8
-    name: 'Cruise ship'
+    name: 'Sailboat'
+}
+item {
+    id: 9
+    name: 'Submarine'
+}
+item {
+    id: 10
+    name: 'Tug'
 }
