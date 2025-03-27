@@ -4,20 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b173d1e-4253-4cc1-b356-db4a2952b01a" name="Changes" comment="Added MobilenetV1_V3">
-      <change afterPath="$PROJECT_DIR$/Dataset/convertPytorch.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/mobilenetV2_320.config" afterDir="false" />
+    <list default="true" id="7b173d1e-4253-4cc1-b356-db4a2952b01a" name="Changes" comment="records too large for git">
+      <change afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/efficientdet_d2.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/mobilenet_v2_lite.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AngularTensorflowJS/ThePirateHayAngular/src/app/tfjsdetection/tfjsdetection.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/AngularTensorflowJS/ThePirateHayAngular/src/app/tfjsdetection/tfjsdetection.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/generate_tfrecord.py" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/generate_tfrecord.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/images/test_labels.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/images/train_labels.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/labelmap.pbtxt" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/labelmap.pbtxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/detect_from_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/detect_from_image.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/mobilenetV2_320.config" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/mobilenetV2_320.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/model_downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/model_downloader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/outputs/detection_output0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/outputs/detection_output1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/outputs/detection_output2.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/test.record" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/test.record" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/train.record" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/train.record" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/xml_to_csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/xml_to_csv.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -420,7 +419,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743087224007</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="records too large for git">
+      <option name="closed" value="true" />
+      <created>1743095657150</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1743095657150</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -452,7 +459,6 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Changed files" />
     <MESSAGE value="Forgot a folder" />
     <MESSAGE value="Changes" />
     <MESSAGE value="Too muchh" />
@@ -477,7 +483,8 @@
     <MESSAGE value="D0 json model done" />
     <MESSAGE value="MobilenetV1 added" />
     <MESSAGE value="Added MobilenetV1_V3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added MobilenetV1_V3" />
+    <MESSAGE value="records too large for git" />
+    <option name="LAST_COMMIT_MESSAGE" value="records too large for git" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/H5$model_downloader.coverage" NAME="model_downloader Coverage Results" MODIFIED="1742507915189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tf2/models/research/object_detection" />

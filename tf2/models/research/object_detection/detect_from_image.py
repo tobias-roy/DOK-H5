@@ -96,7 +96,8 @@ def run_inference(model, category_index, image_path):
                 category_index,
                 instance_masks=output_dict.get('detection_masks_reframed', None),
                 use_normalized_coordinates=True,
-                line_thickness=8)
+                line_thickness=8,
+            skip_labels=True)
             """The existing plt lines do not work on local pc as they are not setup for GUI
                 Use plt.savefig() to save the results instead and view them in a folder"""
             plt.imshow(image_np)
@@ -134,4 +135,4 @@ if __name__ == '__main__':
     run_inference(detection_model, category_index, args.image_path)
 
 # Command to start script
-#  python .\detect_from_images.py -m faster_rcnn_resnet50_v1_640x640x_coco17_tpu7-8\saved_model -l .\data\mscoco_label_map.pbtxt -i .\test_images
+#  python detect_from_image.py -m inference_graph/mobilenetV2_320/saved_model -l labelmap.pbtxt -i test_images
