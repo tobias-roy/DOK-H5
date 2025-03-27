@@ -96,8 +96,8 @@ export class TfjsdetectionComponent implements OnInit {
         this.detectFrame(video, model);
       });
       tf.engine().endScope();
-    }).catch(() => {
-      console.error('Error in detectFrame:');
+    }).catch(function (error: any) {
+      console.error('Error in detectFrame:', error);
     });
   }
 
@@ -133,15 +133,6 @@ export class TfjsdetectionComponent implements OnInit {
       const textWidth = ctx.measureText(item["label"] + " " + (100 * item["score"]).toFixed(2) + "%").width;
       const textHeight = parseInt(font, 10); // base 10
       ctx.fillRect(x, y, textWidth + 4, textHeight + 4);
-    });
-
-    detections.forEach(item => {
-      const x = item['bbox'][0];
-      const y = item['bbox'][1];
-
-      // Draw the text last to ensure it's on top.
-      ctx.fillStyle = "#000000";
-      ctx.fillText(item["label"] + " " + (100*item["score"]).toFixed(2) + "%", x, y);
     });
   };
 }
@@ -190,7 +181,7 @@ async function loadModel() {
   console.log('loadModel called');
   let model: any;
   try {
-    model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/inference_graph/mobilenetV2_320/tfjsconvert/model.json', {onProgress: (number) => console.log('Model loading progress:', number)});
+    model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/inference_graph/mobilenet_v2_lite/tfjsconvert/model.json', {onProgress: (number) => console.log('Model loading progress:', number)});
     console.log('Model loaded successfully');
   } catch (error) {
     console.log('Error loading model:', error);
