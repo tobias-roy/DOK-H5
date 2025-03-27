@@ -6,7 +6,6 @@ import {TfjsdetectionComponent} from './tfjsdetection/tfjsdetection.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent},
-  { path: 'livefeed', component: CamComponent },
-  { path: 'trainer', component: TrainerComponent},
-  { path: 'detection', component: TfjsdetectionComponent}
+  { path: 'pretrained', component: CamComponent },
+  { path: 'detection', component: TfjsdetectionComponent} // TODO add a url path for the specific model you want
 ];

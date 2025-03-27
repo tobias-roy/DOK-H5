@@ -11,4 +11,6 @@ import {NavigatorService} from '../navigator.service';
 })
 export class HomeComponent {
   constructor(private router: Router, protected nav: NavigatorService) {}
+
+  protected readonly location = location;
 }

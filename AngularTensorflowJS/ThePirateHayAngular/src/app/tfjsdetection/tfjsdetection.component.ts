@@ -4,13 +4,14 @@ import {loadGraphModel} from '@tensorflow/tfjs-converter';
 import { async } from 'rxjs';
 import {resolve} from '@angular/compiler-cli';
 tf.setBackend('webgl');
-const threshold = 0.30;
+const threshold = 0.01;
 
 
 @Component({
   selector: 'app-tfjsdetection',
   imports: [],
   templateUrl: './tfjsdetection.component.html',
+  standalone: true,
   styleUrl: './tfjsdetection.component.css'
 })
 export class TfjsdetectionComponent implements OnInit {
@@ -101,6 +102,7 @@ export class TfjsdetectionComponent implements OnInit {
   detectFrame = (video: any, model: any) => {
     tf.engine().startScope();
     model.executeAsync(process_input(video)).then((predictions: any) => {
+      // console.log(predictions);
       this.renderPredictions(predictions);
       requestAnimationFrame(() => {
         this.detectFrame(video, model);
@@ -123,7 +125,6 @@ export class TfjsdetectionComponent implements OnInit {
     const classes = predictions[6].dataSync();
     const detections = buildDetectedObjects(scores, threshold,
       boxes, classes, this.classesDir);
-    console.log(detections);
 
     detections.forEach(item => {
       const x = item['bbox'][0];
@@ -162,7 +163,8 @@ function process_input(video_frame: any){
 function buildDetectedObjects(scores: any, threshold: any, boxes: any, classes: any, classesDir: any) {
   const detectionObjects: any[] = [];
   const video_frame = document.getElementById('videoFeed');
-  if (classes) {
+  if (scores != null && Array.isArray(scores[0])) {
+    console.log(scores);
     scores[0].forEach((score: any, i: number) => {
       if (score > threshold && video_frame != null) {
         const classId = classes[i];
@@ -192,8 +194,14 @@ function buildDetectedObjects(scores: any, threshold: any, boxes: any, classes: 
 async function loadModel() {
   let model: any;
   try {
+    // Cannot load duen to WebGL cap
     // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/H5/refs/heads/MachineLearning/AngularTensorflowJS/model/ship-detector-resnet50/model.json', {onProgress: (number) => console.log(number)})
-    model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/tfjsconvertv3/model.json', {onProgress: (number) => console.log(number)})
+    // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/tfjsconvertv3/model.json', {onProgress: (number) => console.log(number)})
+    // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/d0Convert/model.json', {onProgress: (number) => console.log(number)})
+
+    // model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/saved_model/mobilenetV1/model.json', {onProgress: (number) => console.log(number)})
+    model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/H5/refs/heads/MachineLearning/AngularTensorflowJS/model/ship-detector-resnet50/model.json', {onProgress: (number) => console.log(number)})
+
   } catch (error) {
     console.log('Error loading model:', error);
   }
