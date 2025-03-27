@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b173d1e-4253-4cc1-b356-db4a2952b01a" name="Changes" comment="Initial" />
+    <list default="true" id="7b173d1e-4253-4cc1-b356-db4a2952b01a" name="Changes" comment="MobilenetV1 added">
+      <change afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/ssd_mobilenet_v1_fpn_640x640_coco17_tpu-8.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tf2/models/research/object_detection/model_downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tf2/models/research/object_detection/model_downloader.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,11 +23,12 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="MachineLearning" />
+        <entry key="$PROJECT_DIR$" value="master" />
         <entry key="$PROJECT_DIR$/tf2/models" value="SubModel" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -33,12 +37,12 @@
     &quot;assignee&quot;: &quot;tobias-roy&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/tobias-roy/H5&quot;,
-    &quot;accountId&quot;: &quot;7a504a8f-74c7-4ba1-80ee-32fd173eaf85&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/tobias-roy/DOK-H5",
+    "accountId": "7a504a8f-74c7-4ba1-80ee-32fd173eaf85"
   }
-}</component>
+}]]></component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -52,26 +56,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Python.model_downloader.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\tobia\\source\\repos\\H5\\AngularTensorflowJS\\ThePirateHayAngular\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Python.model_downloader.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "MachineLearning",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "ts.external.directory.path": "C:\\Users\\tobia\\source\\repos\\H5_refined\\AngularTensorflowJS\\ThePirateHayAngular\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\tobia\source\repos\H5\tf2\models\research\object_detection" />
@@ -125,6 +130,7 @@
       <workItem from="1742993568809" duration="2359000" />
       <workItem from="1743001853909" duration="48000" />
       <workItem from="1743002016895" duration="205000" />
+      <workItem from="1743002337655" duration="15283000" />
     </task>
     <task id="LOCAL-00001" summary="Added tensorflow2 project">
       <option name="closed" value="true" />
@@ -214,7 +220,183 @@
       <option name="project" value="LOCAL" />
       <updated>1743001246502</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Initial">
+      <option name="closed" value="true" />
+      <created>1743002461876</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1743002461876</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added">
+      <option name="closed" value="true" />
+      <created>1743020697663</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1743020697663</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added">
+      <option name="closed" value="true" />
+      <created>1743020730067</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1743020730067</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added">
+      <option name="closed" value="true" />
+      <created>1743020799819</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1743020799819</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added">
+      <option name="closed" value="true" />
+      <created>1743020840499</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1743020840499</updated>
+    </task>
+    <task id="LOCAL-00017" summary="added">
+      <option name="closed" value="true" />
+      <created>1743020862561</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1743020862561</updated>
+    </task>
+    <task id="LOCAL-00018" summary="rem">
+      <option name="closed" value="true" />
+      <created>1743021013817</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1743021013817</updated>
+    </task>
+    <task id="LOCAL-00019" summary="added">
+      <option name="closed" value="true" />
+      <created>1743021330697</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1743021330697</updated>
+    </task>
+    <task id="LOCAL-00020" summary="added">
+      <option name="closed" value="true" />
+      <created>1743022286418</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1743022286418</updated>
+    </task>
+    <task id="LOCAL-00021" summary="added">
+      <option name="closed" value="true" />
+      <created>1743022321151</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1743022321151</updated>
+    </task>
+    <task id="LOCAL-00022" summary="addded">
+      <option name="closed" value="true" />
+      <created>1743022370189</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1743022370189</updated>
+    </task>
+    <task id="LOCAL-00023" summary="added">
+      <option name="closed" value="true" />
+      <created>1743022668544</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1743022668544</updated>
+    </task>
+    <task id="LOCAL-00024" summary="maybe bad added">
+      <option name="closed" value="true" />
+      <created>1743022773857</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1743022773857</updated>
+    </task>
+    <task id="LOCAL-00025" summary="samples">
+      <option name="closed" value="true" />
+      <created>1743023045444</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1743023045444</updated>
+    </task>
+    <task id="LOCAL-00026" summary="saved model">
+      <option name="closed" value="true" />
+      <created>1743023066162</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1743023066162</updated>
+    </task>
+    <task id="LOCAL-00027" summary="test_data">
+      <option name="closed" value="true" />
+      <created>1743023112597</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1743023112597</updated>
+    </task>
+    <task id="LOCAL-00028" summary="test_images">
+      <option name="closed" value="true" />
+      <created>1743023134373</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1743023134373</updated>
+    </task>
+    <task id="LOCAL-00029" summary="tpu-expoerrtst">
+      <option name="closed" value="true" />
+      <created>1743023169387</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1743023169387</updated>
+    </task>
+    <task id="LOCAL-00030" summary="test commint">
+      <option name="closed" value="true" />
+      <created>1743023326230</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1743023326230</updated>
+    </task>
+    <task id="LOCAL-00031" summary="New stuff">
+      <option name="closed" value="true" />
+      <created>1743029862492</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1743029862492</updated>
+    </task>
+    <task id="LOCAL-00032" summary="D0 json model done">
+      <option name="closed" value="true" />
+      <created>1743064596477</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1743064596477</updated>
+    </task>
+    <task id="LOCAL-00033" summary="MobilenetV1 added">
+      <option name="closed" value="true" />
+      <created>1743074255166</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1743074255166</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,14 +405,29 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnknownFeatures">
+    <option featureType="com.intellij.configurationType" implementationName="PythonConfigurationType" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:webpack" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.config" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:@angular/core" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:karma" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
       <path value="$PROJECT_DIR$/tf2/models" />
+      <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Added tensorflow2 project" />
     <MESSAGE value="A lot of changes and stuff" />
     <MESSAGE value="Changed files" />
     <MESSAGE value="Forgot a folder" />
@@ -242,7 +439,21 @@
     <MESSAGE value="Pushed this again" />
     <MESSAGE value="Can't for the life of me push this shit" />
     <MESSAGE value="W" />
-    <option name="LAST_COMMIT_MESSAGE" value="W" />
+    <MESSAGE value="Initial" />
+    <MESSAGE value="rem" />
+    <MESSAGE value="addded" />
+    <MESSAGE value="added" />
+    <MESSAGE value="maybe bad added" />
+    <MESSAGE value="samples" />
+    <MESSAGE value="saved model" />
+    <MESSAGE value="test_data" />
+    <MESSAGE value="test_images" />
+    <MESSAGE value="tpu-expoerrtst" />
+    <MESSAGE value="test commint" />
+    <MESSAGE value="New stuff" />
+    <MESSAGE value="D0 json model done" />
+    <MESSAGE value="MobilenetV1 added" />
+    <option name="LAST_COMMIT_MESSAGE" value="MobilenetV1 added" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/H5$model_downloader.coverage" NAME="model_downloader Coverage Results" MODIFIED="1742507915189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tf2/models/research/object_detection" />
