@@ -1,1 +1,1 @@
-This
+This repository consists of my H5 assignments and projects.
