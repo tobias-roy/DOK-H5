@@ -15,20 +15,21 @@ interface ClassInfo {
       <h3>ResNet50 Detector</h3>
       <video
         #videoFrame
-        style="height: 600px; width: 500px;"
+        style="height: 360px; width: 480px; position: absolute;"
         class="size"
         autoplay
         playsinline
         muted
         id="frame"
-        width="600"
-        height="500"
+        width="480"
+        height="360"
       ></video>
       <canvas
         #canvasOverlay
         class="size"
-        width="600"
-        height="500"
+        width="480"
+        height="360"
+        style="position: absolute;"
       ></canvas>
     </div>
   `,
@@ -55,7 +56,7 @@ export class TfjsdetectionComponent implements OnInit, AfterViewInit {
     10: { name: 'Tug', id: 10 }
   }
 
-  private threshold = 0.01;
+  private threshold = 0.99;
 
   ngOnInit(): void {
     tf.setBackend('webgl');
@@ -71,8 +72,8 @@ export class TfjsdetectionComponent implements OnInit, AfterViewInit {
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: false,
           video: {
-            width: 640,
-            height: 480
+            width: 480,
+            height: 360
           }
         });
 
@@ -155,6 +156,7 @@ export class TfjsdetectionComponent implements OnInit, AfterViewInit {
   buildDetectedObjects(predictions: any[], threshold: number): any[] {
     const detections: any[] = [];
     const videoFrame = this.videoRef.nativeElement;
+    const scaleFactor = 0.95; // Adjust this factor to scale down the bounding boxes
 
     // Find the tensors with specific shapes
     const classesTensor = predictions.find(p => p.shape.length === 3 && p.shape[2] === 11);
@@ -178,12 +180,13 @@ export class TfjsdetectionComponent implements OnInit, AfterViewInit {
 
         const [minY, minX, maxY, maxX] = boxes[i];
 
-        const bbox = [
-          minX * videoFrame.offsetWidth,   // x
-          minY * videoFrame.offsetHeight,  // y
-          (maxX - minX) * videoFrame.offsetWidth,   // width
-          (maxY - minY) * videoFrame.offsetHeight   // height
-        ];
+        // Calculate the bounding box with scaling
+        const bboxWidth = (maxX - minX) * videoFrame.videoWidth * scaleFactor;
+        const bboxHeight = (maxY - minY) * videoFrame.videoHeight * scaleFactor;
+        const bboxX = minX * videoFrame.videoWidth + (1 - scaleFactor) * bboxWidth / 2;
+        const bboxY = minY * videoFrame.videoHeight + (1 - scaleFactor) * bboxHeight / 2;
+
+        const bbox = [bboxX, bboxY, bboxWidth, bboxHeight];
 
         detections.push({
           class: classId,
