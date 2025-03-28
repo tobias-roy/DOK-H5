@@ -60,7 +60,7 @@ export class TfjsdetectionComponentV1 implements OnInit, AfterViewInit {
     10: { name: 'Tug', id: 10 }
   }
 
-  private threshold = 0.99;
+  private threshold = 9.9;
 
   ngOnInit(): void {
     tf.setBackend('webgl');
@@ -166,11 +166,12 @@ export class TfjsdetectionComponentV1 implements OnInit, AfterViewInit {
     const detections: any[] = [];
     const videoFrame = this.videoRef.nativeElement;
     const scaleFactor = 0.95; // Adjust this factor to scale down the bounding boxes
+    const minScore = 0.5; // Minimum score threshold
 
     // Find the tensors with specific shapes
-    const classesTensor = predictions.find(p => p.shape.length === 3 && p.shape[2] === 11);
-    const scoresTensor = predictions.find(p => p.shape.length === 2 && p.shape[1] === 300);
-    const boxesTensor = predictions.find(p => p.shape.length === 3 && p.shape[2] === 4);
+    const classesTensor = predictions.find(p => p.shape.length === 3 && p.shape[2] === 11 && p.shape[1] === 51150);
+    const scoresTensor = predictions.find(p => p.shape.length === 2 && p.shape[1] === 100);
+    const boxesTensor = predictions.find(p => p.shape.length === 3 && p.shape[2] === 4 && p.shape[1] === 51150);
 
     if (!classesTensor || !scoresTensor || !boxesTensor) {
       console.error('Could not find required tensors');
@@ -182,7 +183,8 @@ export class TfjsdetectionComponentV1 implements OnInit, AfterViewInit {
     const boxes = boxesTensor.arraySync()[0];
 
     for (let i = 0; i < scores.length; i++) {
-      if (scores[i] > threshold) {
+      console.log(scores[i])
+      if (scores[i] > threshold && scores[i] >= minScore) {
         // Find the class with the highest probability
         const classProbs = classes[i];
         const classId = classProbs.indexOf(Math.max(...classProbs));
