@@ -1,13 +1,9 @@
-<div class="buttonWrapper">
-  <button (click)="nav.NavigateTo('/pretrained')" >Pre trained</button>
-  <button (click)="nav.NavigateTo('/detection')" >Custom model</button>
-  <button (click)="location.href='https://github.com/tobias-roy/DOK-H5/tree/MachineLearning'">Documentation</button>
-</div>
-
 <div class="modalOverlay">
   <button class="closeButton">X</button>
     <button class="modalButton" (click)="nav.NavigateTo('/pretrained')" >Pre trained</button>
-    <button class="modalButton" (click)="nav.NavigateTo('/detection')" >Custom model</button>
+  <button class="modalButton" (click)="nav.NavigateTo('/detection/resnet')" >Resnet 50</button>
+  <button class="modalButton" (click)="nav.NavigateTo('/detection/mobilev1')" >Mobilenet V1 FPN</button>
+  <button class="modalButton" (click)="nav.NavigateTo('/detection/mobilev2')" >Mobilenet V2 Lite</button>
     <button class="modalButton" (click)="location.href='https://github.com/tobias-roy/DOK-H5/tree/MachineLearning'">Documentation</button>
 </div>
 
