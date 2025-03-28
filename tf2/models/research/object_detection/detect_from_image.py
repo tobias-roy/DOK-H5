@@ -24,18 +24,7 @@ def load_model(model_path):
 
 
 def load_image_into_numpy_array(path):
-    """Load an image from file into a numpy array.
-
-    Puts image into numpy array to feed into tensorflow graph.
-    Note that by convention we put it into a numpy array with shape
-    (height, width, channels), where channels=3 for RGB.
-
-    Args:
-      path: a file path (this can be local or on colossus)
-
-    Returns:
-      uint8 numpy array with shape (img_height, img_width, 3)
-    """
+    """Load an image from file into a numpy array."""
     img_data = tf.io.gfile.GFile(path, 'rb').read()
     image = Image.open(BytesIO(img_data))
     (im_width, im_height) = image.size
@@ -63,6 +52,10 @@ def run_inference_for_single_image(model, image):
     # detection_classes should be ints.
     output_dict['detection_classes'] = output_dict['detection_classes'].astype(np.int64)
 
+    # Print debug information
+    print("Detection Scores:", output_dict['detection_scores'])
+    print("Detection Classes:", output_dict['detection_classes'])
+
     # Handle models with masks:
     if 'detection_masks' in output_dict:
         # Reframe the the bbox mask to the image size.
@@ -76,63 +69,69 @@ def run_inference_for_single_image(model, image):
 
 
 def run_inference(model, category_index, image_path):
+    # Debugging category index
+    print("Category Index:", category_index)
+
     if os.path.isdir(image_path):
         image_paths = []
-        for file_extension in ('*.png', '*jpg'):
+        for file_extension in ('*.png', '*.jpg', '*.jpeg'):
             image_paths.extend(glob.glob(os.path.join(image_path, file_extension)))
 
-        """add iterator here"""
-        i = 0
-        for i_path in image_paths:
+        # Ensure outputs directory exists
+        os.makedirs('outputs', exist_ok=True)
+
+        for i, i_path in enumerate(image_paths):
             image_np = load_image_into_numpy_array(i_path)
+            
             # Actual detection.
             output_dict = run_inference_for_single_image(model, image_np)
+            
+            # Threshold the detection scores (e.g., only show detections above 0.5)
+            threshold = 0.5
+            valid_indices = output_dict['detection_scores'] > threshold
+            
             # Visualization of the results of a detection.
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image_np,
-                output_dict['detection_boxes'],
-                output_dict['detection_classes'],
-                output_dict['detection_scores'],
+                output_dict['detection_boxes'][valid_indices],
+                output_dict['detection_classes'][valid_indices],
+                output_dict['detection_scores'][valid_indices],
                 category_index,
                 instance_masks=output_dict.get('detection_masks_reframed', None),
                 use_normalized_coordinates=True,
                 line_thickness=8,
-            skip_labels=True)
-            """The existing plt lines do not work on local pc as they are not setup for GUI
-                Use plt.savefig() to save the results instead and view them in a folder"""
+                min_score_thresh=threshold
+            )
+            
+            plt.figure(figsize=(12,8))
             plt.imshow(image_np)
-            # plt.show()
-            plt.savefig("outputs/detection_output{}.png".format(i))  # make sure to make an outputs folder
-            i = i + 1
-    # else:
-    #     image_np = load_image_into_numpy_array(image_path)
-    #     # Actual detection.
-    #     output_dict = run_inference_for_single_image(model, image_np)
-    #     # Visualization of the results of a detection.
-    #     vis_util.visualize_boxes_and_labels_on_image_array(
-    #         image_np,
-    #         output_dict['detection_boxes'],
-    #         output_dict['detection_classes'],
-    #         output_dict['detection_scores'],
-    #         category_index,
-    #         instance_masks=output_dict.get('detection_masks_reframed', None),
-    #         use_normalized_coordinates=True,
-    #         line_thickness=8)
-    #     plt.imshow(image_np)
-    #     plt.show()
+            plt.axis('off')
+            plt.tight_layout()
+            plt.savefig(f"outputs/detection_output_{i}.png", bbox_inches='tight', pad_inches=0)
+            plt.close()
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Detect objects inside webcam videostream')
+    parser = argparse.ArgumentParser(description='Detect objects inside image')
     parser.add_argument('-m', '--model', type=str, required=True, help='Model Path')
     parser.add_argument('-l', '--labelmap', type=str, required=True, help='Path to Labelmap')
     parser.add_argument('-i', '--image_path', type=str, required=True, help='Path to image (or folder)')
+    
+    # Optional threshold argument
+    parser.add_argument('--threshold', type=float, default=0.5, help='Detection threshold')
+    
     args = parser.parse_args()
 
+    # Load detection model
     detection_model = load_model(args.model)
-    category_index = label_map_util.create_category_index_from_labelmap(args.labelmap, use_display_name=True)
+    
+    # Create category index from labelmap
+    try:
+        category_index = label_map_util.create_category_index_from_labelmap(args.labelmap, use_display_name=True)
+    except Exception as e:
+        print(f"Error loading labelmap: {e}")
+        print("Check your labelmap file format and path.")
+        exit(1)
 
+    # Run inference
     run_inference(detection_model, category_index, args.image_path)
-
-# Command to start script
-#  python detect_from_image.py -m inference_graph/mobilenetV2_320/saved_model -l labelmap.pbtxt -i test_images
