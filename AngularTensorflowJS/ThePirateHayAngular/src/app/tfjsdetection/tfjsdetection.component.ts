@@ -13,6 +13,9 @@ interface ClassInfo {
     <div>
       <h1>Real-Time Object Detection: Ships</h1>
       <h3>ResNet50 Detector</h3>
+      <div>
+        <p>Model loading progress: {{ loadingProgress }}%</p>
+      </div>
       <video
         #videoFrame
         style="height: 360px; width: 480px; position: absolute;"
@@ -41,6 +44,8 @@ export class TfjsdetectionComponent implements OnInit, AfterViewInit {
   @ViewChild('canvasOverlay') canvasRef!: ElementRef;
 
   videoStream: any;
+  loadingProgress: string = '0';
+
 
   // Define the classes for detection
   classesDir: { [key: number]: ClassInfo } = {
@@ -96,7 +101,12 @@ export class TfjsdetectionComponent implements OnInit, AfterViewInit {
 
   async loadModel(): Promise<any> {
     try {
-      const model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/inference_graph/resnet50/tfjsconvert/model.json');
+      const model = await loadGraphModel('https://raw.githubusercontent.com/tobias-roy/DOK-H5/refs/heads/MachineLearning/tf2/models/research/object_detection/inference_graph/resnet50/tfjsconvert/model.json',
+        {
+          onProgress: (fraction: number) => {
+            this.loadingProgress = (fraction * 100).toFixed(2);
+          }
+        });
       return model;
     } catch (error) {
       console.error('Model loading failed:', error);
