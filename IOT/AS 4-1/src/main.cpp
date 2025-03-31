@@ -16,8 +16,10 @@ void printData()
 
   Serial.println();
   Serial.println("Network Information:");
-  Serial.print("SSID: ");
+  Serial.print("Current connected WiFi SSID: ");
   Serial.println(WiFi.SSID());
+  Serial.print("Current status:");
+  Serial.println(status);
 
   // print the received signal strength:
   long rssi = WiFi.RSSI();
@@ -28,33 +30,6 @@ void printData()
   Serial.print("Encryption Type:");
   Serial.println(encryption, HEX);
   Serial.println();
-}
-
-void setup()
-{
-  //Initialize serial and wait for port to open:
-  Serial.begin(9600);
-  while (!Serial)
-    ;
-
-  // attempt to connect to Wifi network:
-  while (status != WL_CONNECTED)
-  {
-    Serial.print("Attempting to connect to network: ");
-    Serial.println(ssid);
-    // Connect to WPA/WPA2 network:
-    status = WiFi.begin(ssid, pass);
-
-    // wait 10 seconds for connection:
-    delay(10000);
-  }
-
-  // you're connected now, so print out the data:
-  Serial.println("You're connected to the network");
-
-  Serial.println("----------------------------------------");
-  printData();
-  Serial.println("----------------------------------------");
 }
 
 void printEncryptionType(int thisType) {
@@ -106,15 +81,36 @@ void listNetworks() {
   }
 }
 
-
-
-void loop()
+void setup()
 {
-  // check the network connection once every 10 seconds:
-  delay(10000);
-  Serial.println("Scanning available networks...");
-  listNetworks();
+  //Initialize serial and wait for port to open:
+  Serial.begin(9600);
+  while (!Serial);
+  // attempt to connect to Wifi network:
+  while (status != WL_CONNECTED)
+  {
+    Serial.print("Attempting to connect to network: ");
+    Serial.println(ssid);
+    // Connect to WPA/WPA2 network:
+    status = WiFi.begin(ssid, pass);
+    // wait 10 seconds for connection:
+    Serial.println(status);
+    delay(10000);
+  }
+  // you're connected now, so print out the data:
+  Serial.println("You're connected to the network");
   Serial.println("----------------------------------------");
   printData();
   Serial.println("----------------------------------------");
+}
+
+void loop()
+{
+  listNetworks();
+  delay(5000);
+  Serial.println("Scanning available networks...");
+  Serial.println("----------------------------------------");
+  printData();
+  Serial.println("----------------------------------------");
+  delay(5000);
 }
