@@ -11,6 +11,7 @@ This is a repository of the assignments during my H5 course - specifically for t
 
 ## Worklog
 [Day 1 - Introduction day](#day-1---introduction-day)
+[Day 2 - MQTT Continued](#day-2---mqtt-continued)
 
 ### Day 1 - Introduction day
 Downloaded and installed [PlatformIO Core and PlatformIO extension](https://platformio.org/) for vscode.
@@ -25,6 +26,16 @@ Assignment 4.2 - Sending a package via [WiFi & SSL](https://docs.arduino.cc/tuto
 
 Went over a lot of stuff in regards to MQTT basics.
 
+### Day 2 - MQTT Continued
+Quick sum up from yesterday
+
+Assignment 5.3 - MQTT and shiftr.io with MQTTX client - here we created clients with MQTTX and used the shifrt.io cloud service as a broker to get a map of what MQTT messages and topics we broadcasted.
+
+Assignment 6.1 - 
+
+Assignment 6.2 - 
+
+Assignment 6.3 - 
 
 
 # Notes
@@ -72,7 +83,7 @@ Today we use MQTT 3.1.1 as the industry standard which is also ISO certified.
 2. The MQTT Connectionflow starts.
 3. Client sends a connect packet to the broker which consists of, clientId, username/password base or token, lastwill, testament and keepalive information, clean session flag - this indicates if the broker should forget og remember the client and session upon reconnet/disconnect.
 4. After the connect packet is recieved, the broker sends a CONNACK.
-5. CONNACK constist of sissionPresent and returncode, wether or not to indicate if we are allowed to have a connection.
+5. CONNACK constist of sessionPresent and returncode, wether or not to indicate if we are allowed to have a connection.
 
 #### Publish
 - The client creates a MQTT PUBLISH packet. It consists of a packetId, topicName (this is very important!), qos level, retainFlag, payload field (this is all relevant information, ie the data) and a dupFlag.
@@ -104,6 +115,10 @@ Best practices for Topics
 - Embed a unique identifier or client ID in a topic.
 - Never subscribe to root #
 
+### QoS
+- QoS 0, messages sent once then lost
+- QoS 1, messages repeatedly sent until an ACK is recieved from the destination duplicate possibility
+- QoS 2, messages repeatedly sent until an ACK is recieved, without duplicate
 
 
 
@@ -120,7 +135,8 @@ Best practices for Topics
 8. No, it uses Publish/Subscribe
 
 #### Questions 4 - 6
-1. PUB/SUB is very scalable and supports decoupling which is highly persistent in regards to loosing/gaining connections and keeping connectivity.
-2. MQTT is the application layer, TLS in the presntation Layer, TCP in the transport layer, IP in the network layer, WIFI/Ethernet...etc... in the Datalink and physical layer.
+1. PUB/SUB is very scalable and supports decoupling which is highly persistent in regards to loosing/gaining connections and keeping connectivity. Requires less resources than HTTP, it's binary (Data-agnostic).
+2. MQTT is the application layer, TLS in the presentation Layer, TCP in the transport layer, IP in the network layer, WIFI/Ethernet...etc... in the Datalink and physical layer.
 3. See [Connection flow](#connection-flow)
 4. See [Connection flow](#connection-flow)
+
