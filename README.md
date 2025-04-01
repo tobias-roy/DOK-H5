@@ -31,9 +31,9 @@ Quick sum up from yesterday
 
 Assignment 5.3 - MQTT and shiftr.io with MQTTX client - here we created clients with MQTTX and used the shifrt.io cloud service as a broker to get a map of what MQTT messages and topics we broadcasted.
 
-Assignment 6.1 - 
+Assignment 6.1 - Publisher/Subscriber metoder igennem
 
-Assignment 6.2 - 
+Assignment 6.2 - Fra en MQTT client skal vi sende en streng: ON / OFF - det skal modtages på boardet og så skal den tænde eller slukke på baggrund af hvad strengen indeholder og servoen skal køre
 
 Assignment 6.3 - 
 

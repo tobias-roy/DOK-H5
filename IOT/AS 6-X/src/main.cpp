@@ -39,9 +39,9 @@ char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as k
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
 
-const char broker[] = "test.mosquitto.org";
+const char broker[] = "dipsimipsi.cloud.shiftr.io";
 int        port     = 1883;
-const char topic[]  = "arduino/simple";
+const char topic[]  = "arduino/#";
 
 void setup() {
   //Initialize serial and wait for port to open:
@@ -64,10 +64,11 @@ void setup() {
 
   // You can provide a unique client ID, if not set the library uses Arduino-millis()
   // Each client must have a unique client ID
-  // mqttClient.setId("clientId");
+  mqttClient.setId("the0verl0rd");
 
   // You can provide a username and password for authentication
-  // mqttClient.setUsernamePassword("username", "password");
+  //mqtt://dipsimipsi:g1TFQDC2ZLR2gVLM@dipsimipsi.cloud.shiftr.io
+  mqttClient.setUsernamePassword("dipsimipsi", "g1TFQDC2ZLR2gVLM");
 
   Serial.print("Attempting to connect to the MQTT broker: ");
   Serial.println(broker);
