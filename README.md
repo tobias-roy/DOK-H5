@@ -33,11 +33,11 @@ Assignment 5.3 - MQTT and shiftr.io with MQTTX client - here we created clients 
 
 Assignment 6.1 - Publisher/Subscriber metoder igennem
 
-Broker credentials: mqtt://h5dok:AjZSoheCb8EAOS31@h5dok.cloud.shiftr.io
+Broker credentials for SHIFTR: mqtt://h5dok:AjZSoheCb8EAOS31@h5dok.cloud.shiftr.io
 
 Assignment 6.2 - Fra en MQTT client skal vi sende en streng: ON / OFF - det skal modtages på boardet og så skal den tænde eller slukke på baggrund af hvad strengen indeholder og servoen skal køre
 
-Assignment 6.3 - 
+Assignment 6.3 - Connecting a DHT11 to the board and transmitting data via MQTT from the board to our interface.
 
 
 # Notes
