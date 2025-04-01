@@ -15,12 +15,14 @@
 #include <utility/wifi_drv.h>
 #include <Servo.h>
 #include "arduino_secrets.h"
-
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+#include <DHT_U.h>
 
 char ssid[] = SECRET_SSID;    // your network SSID (name)
 char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
 
-WiFiClient wifiClient;
+WiFiSSLClient wifiClient;
 MqttClient mqttClient(wifiClient);
 Servo engine;
 int engine_pos;
@@ -29,32 +31,59 @@ const char broker[] = MQTT_BROKER_ADDRESS;
 int        port     = MQTT_BROKER_PORT;
 const char topic[]  = "board/controller/#";
 
+void rgbColor(int r, int g, int b) {
+        WiFiDrv::analogWrite(26, r);   //RED
+        WiFiDrv::analogWrite(25, g); //GREEN
+        WiFiDrv::analogWrite(27, b);   //BLUE
+}
+
+void youHaveBeenCommanded(int _) {
+  while (mqttClient.available()) {
+    char command = (char)mqttClient.read();
+    Serial.print("Command: ");
+    Serial.println(command);
+    if(command == '0') {
+      engine_pos = 0;
+      engine.write(engine_pos);
+      Serial.println("Engine position: 0");
+    };
+    if(command == '1') {
+      engine_pos = 180;
+      engine.write(engine_pos);
+      Serial.println("Engine position: 180");
+    };
+  }
+}
+
 void setup() {
   WiFiDrv::pinMode(25, OUTPUT); //define GREEN LED
   WiFiDrv::pinMode(26, OUTPUT); //define RED LED
   WiFiDrv::pinMode(27, OUTPUT); //define BLUE LED
-  engine.attach(7);
-  //Initialize serial and wait for port to open:
+  engine.attach(A4);
+
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-  // attempt to connect to WiFi network:
   Serial.print("Attempting to connect to WPA SSID: ");
+  rgbColor(255, 0, 0);
   Serial.println(ssid);
   while (WiFi.begin(ssid, pass) != WL_CONNECTED) {
-    // failed, retry
     Serial.print(".");
     delay(5000);
   }
 
+  rgbColor(0, 255, 0);
   Serial.println("You're connected to the network");
   Serial.println();
 
   //MQTT setup
   mqttClient.setId(MQTT_CLIENT_ID);
   mqttClient.setUsernamePassword(MQTT_BROKER_USERNAME, MQTT_BROKER_PASSWORD);
+
+  //Eventhandler
+  mqttClient.onMessage(youHaveBeenCommanded);
 
   Serial.print("Connecting to broker:");
   Serial.println(broker);
@@ -67,6 +96,7 @@ void setup() {
   }
 
   Serial.println("Connected to the broker.");
+  rgbColor(0, 0, 255);
   Serial.println();
 
   Serial.print("Subscribing to topic: ");
@@ -81,35 +111,9 @@ void setup() {
 }
 
 void loop() {
-  int messageSize = mqttClient.parseMessage();
-  if (messageSize) {
-    Serial.print("Recieved a command:");
-    while (mqttClient.available()) {
-      int command = (int)mqttClient.read();
-      switch (command)
-      {
-        case 49:
-        WiFiDrv::analogWrite(25, 255); //GREEN
-        WiFiDrv::analogWrite(26, 0);   //RED
-        WiFiDrv::analogWrite(27, 0);   //BLUE
-        for(engine_pos = 0; engine_pos <= 180; engine_pos += 1){
-          engine.write(engine_pos);
-        }
-        break;
-      case 48:
-        WiFiDrv::analogWrite(25, 0); //GREEN
-        WiFiDrv::analogWrite(26, 0);   //RED
-        WiFiDrv::analogWrite(27, 0);   //BLUE
-        for(engine_pos = 180; engine_pos >= 0; engine_pos -= 1){
-          engine.write(engine_pos);
-        }
-        break;
-      default:
-        break;
-      }
-
-      Serial.println(command);
-    }
-    Serial.println();
-  }
+  mqttClient.poll();
+  if(!mqttClient.connected()){
+    rgbColor(255, 255, 0);
+  };
+  delay(100);
 }
