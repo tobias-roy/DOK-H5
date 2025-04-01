@@ -19,17 +19,23 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
+#define DHTPIN 2 //DHT Connected pin
+#define DHTTYPE DHT11 //DHT 11
+
 char ssid[] = SECRET_SSID;    // your network SSID (name)
 char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
 
 WiFiSSLClient wifiClient;
 MqttClient mqttClient(wifiClient);
+DHT_Unified dht(DHTPIN, DHTTYPE);
 Servo engine;
+sensor_t sensor;
 int engine_pos;
 
 const char broker[] = MQTT_BROKER_ADDRESS;
 int        port     = MQTT_BROKER_PORT;
 const char topic[]  = "board/controller/#";
+uint32_t delayMS;
 
 void rgbColor(int r, int g, int b) {
         WiFiDrv::analogWrite(26, r);   //RED
@@ -59,12 +65,19 @@ void setup() {
   WiFiDrv::pinMode(25, OUTPUT); //define GREEN LED
   WiFiDrv::pinMode(26, OUTPUT); //define RED LED
   WiFiDrv::pinMode(27, OUTPUT); //define BLUE LED
-  engine.attach(A4);
+  // engine.attach(A4);
+
 
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
+
+  dht.begin();
+  sensor_t sensor;
+  dht.temperature().getSensor(&sensor);
+  dht.humidity().getSensor(&sensor);
+  delayMS = sensor.min_delay / 1000;
 
   Serial.print("Attempting to connect to WPA SSID: ");
   rgbColor(255, 0, 0);
@@ -110,10 +123,26 @@ void setup() {
   Serial.println();
 }
 
+void sendData(){
+  // Send data to the broker
+  String data = "";
+  sensors_event_t event;
+  dht.temperature().getEvent(&event);
+  data += "Temp: " + String(event.temperature) + ", ";
+  dht.humidity().getEvent(&event);
+  data += "Humidity: " + String(event.relative_humidity);
+  Serial.print(F("Data: "));
+  Serial.println(data);
+  // Send data to the broker
+  mqttClient.beginMessage("board/data");
+  mqttClient.print(data);
+  mqttClient.endMessage();
+}
+
 void loop() {
-  mqttClient.poll();
+  delay(delayMS);
   if(!mqttClient.connected()){
     rgbColor(255, 255, 0);
   };
-  delay(100);
+  sendData();
 }
