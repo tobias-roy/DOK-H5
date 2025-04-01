@@ -1,15 +1,3 @@
-/*
-  ArduinoMqttClient - WiFi Simple Receive
-
-  This example connects to a MQTT broker and subscribes to a single topic.
-  When a message is received it prints the message to the Serial Monitor.
-
-  The circuit:
-  - Arduino MKR 1000, MKR 1010 or Uno WiFi Rev2 board
-
-  This example code is in the public domain.
-*/
-
 #include <ArduinoMqttClient.h>
 #if defined(ARDUINO_SAMD_MKRWIFI1010) || defined(ARDUINO_SAMD_NANO_33_IOT) || defined(ARDUINO_AVR_UNO_WIFI_REV2)
   #include <WiFiNINA.h>
@@ -24,26 +12,28 @@
 #elif defined(ARDUINO_UNOR4_WIFI)
   #include <WiFiS3.h>
 #endif
-
+#include <utility/wifi_drv.h>
+#include <Servo.h>
 #include "arduino_secrets.h"
-///////please enter your sensitive data in the Secret tab/arduino_secrets.h
+
+
 char ssid[] = SECRET_SSID;    // your network SSID (name)
 char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
 
-// To connect with SSL/TLS:
-// 1) Change WiFiClient to WiFiSSLClient.
-// 2) Change port value from 1883 to 8883.
-// 3) Change broker value to a server with a known SSL/TLS root certificate 
-//    flashed in the WiFi module.
-
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
+Servo engine;
+int engine_pos;
 
-const char broker[] = "dipsimipsi.cloud.shiftr.io";
-int        port     = 1883;
-const char topic[]  = "arduino/#";
+const char broker[] = MQTT_BROKER_ADDRESS;
+int        port     = MQTT_BROKER_PORT;
+const char topic[]  = "board/controller/#";
 
 void setup() {
+  WiFiDrv::pinMode(25, OUTPUT); //define GREEN LED
+  WiFiDrv::pinMode(26, OUTPUT); //define RED LED
+  WiFiDrv::pinMode(27, OUTPUT); //define BLUE LED
+  engine.attach(7);
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
   while (!Serial) {
@@ -62,15 +52,11 @@ void setup() {
   Serial.println("You're connected to the network");
   Serial.println();
 
-  // You can provide a unique client ID, if not set the library uses Arduino-millis()
-  // Each client must have a unique client ID
-  mqttClient.setId("the0verl0rd");
+  //MQTT setup
+  mqttClient.setId(MQTT_CLIENT_ID);
+  mqttClient.setUsernamePassword(MQTT_BROKER_USERNAME, MQTT_BROKER_PASSWORD);
 
-  // You can provide a username and password for authentication
-  //mqtt://dipsimipsi:g1TFQDC2ZLR2gVLM@dipsimipsi.cloud.shiftr.io
-  mqttClient.setUsernamePassword("dipsimipsi", "g1TFQDC2ZLR2gVLM");
-
-  Serial.print("Attempting to connect to the MQTT broker: ");
+  Serial.print("Connecting to broker:");
   Serial.println(broker);
 
   if (!mqttClient.connect(broker, port)) {
@@ -80,18 +66,14 @@ void setup() {
     while (1);
   }
 
-  Serial.println("You're connected to the MQTT broker!");
+  Serial.println("Connected to the broker.");
   Serial.println();
 
   Serial.print("Subscribing to topic: ");
   Serial.println(topic);
   Serial.println();
 
-  // subscribe to a topic
   mqttClient.subscribe(topic);
-
-  // topics can be unsubscribed using:
-  // mqttClient.unsubscribe(topic);
 
   Serial.print("Waiting for messages on topic: ");
   Serial.println(topic);
@@ -101,19 +83,33 @@ void setup() {
 void loop() {
   int messageSize = mqttClient.parseMessage();
   if (messageSize) {
-    // we received a message, print out the topic and contents
-    Serial.print("Received a message with topic '");
-    Serial.print(mqttClient.messageTopic());
-    Serial.print("', length ");
-    Serial.print(messageSize);
-    Serial.println(" bytes:");
-
-    // use the Stream interface to print the contents
+    Serial.print("Recieved a command:");
     while (mqttClient.available()) {
-      Serial.print((char)mqttClient.read());
-    }
-    Serial.println();
+      int command = (int)mqttClient.read();
+      switch (command)
+      {
+        case 49:
+        WiFiDrv::analogWrite(25, 255); //GREEN
+        WiFiDrv::analogWrite(26, 0);   //RED
+        WiFiDrv::analogWrite(27, 0);   //BLUE
+        for(engine_pos = 0; engine_pos <= 180; engine_pos += 1){
+          engine.write(engine_pos);
+        }
+        break;
+      case 48:
+        WiFiDrv::analogWrite(25, 0); //GREEN
+        WiFiDrv::analogWrite(26, 0);   //RED
+        WiFiDrv::analogWrite(27, 0);   //BLUE
+        for(engine_pos = 180; engine_pos >= 0; engine_pos -= 1){
+          engine.write(engine_pos);
+        }
+        break;
+      default:
+        break;
+      }
 
+      Serial.println(command);
+    }
     Serial.println();
   }
 }
