@@ -9,11 +9,12 @@ This is a repository of the assignments during my H5 course - specifically for t
 
 [MQTT Questions](#mqtt-questions)
 
-## Worklog
+# Worklog
 [Day 1 - Introduction day](#day-1---introduction-day)
+
 [Day 2 - MQTT Continued](#day-2---mqtt-continued)
 
-### Day 1 - Introduction day
+## Day 1 - Introduction day
 Downloaded and installed [PlatformIO Core and PlatformIO extension](https://platformio.org/) for vscode.
 
 Assignment 2.1 - booting up a [MKR WIFI 1010](https://docs.arduino.cc/hardware/mkr-wifi-1010/)
@@ -26,7 +27,7 @@ Assignment 4.2 - Sending a package via [WiFi & SSL](https://docs.arduino.cc/tuto
 
 Went over a lot of stuff in regards to MQTT basics.
 
-### Day 2 - MQTT Continued
+## Day 2 - MQTT Continued
 Quick sum up from yesterday
 
 Assignment 5.3 - MQTT and shiftr.io with MQTTX client - here we created clients with MQTTX and used the shifrt.io cloud service as a broker to get a map of what MQTT messages and topics we broadcasted.
@@ -39,9 +40,19 @@ Assignment 6.2 - Fra en MQTT client skal vi sende en streng: ON / OFF - det skal
 
 Assignment 6.3 - Connecting a DHT11 to the board and transmitting data via MQTT from the board to our interface.
 
+Assignment 6.4 - HiveMQ Cluster Passwords 'TestCluster1'
+
+Assignment 6.5 - Basicly the same as the previously 6 assignments just change the connection strings.
+
+Assignment 6.6 - Controlling the servo via HiveMQ is also the same as the previous assignment
+
+
+## Day 3
+
+
 
 # Notes
-#### MQTT 
+### MQTT 
 The lightweigh data transfer protocol. Developed for transfering machine telemetry with minimal battery loss and minimal bandwidth. It's data agnostic because it transfers binary data. The MQTT requirements are the requirements we also have to IoT today: 
 
 - Simple implementation
@@ -52,7 +63,7 @@ The lightweigh data transfer protocol. Developed for transfering machine telemet
 
 Today we use MQTT 3.1.1 as the industry standard which is also ISO certified.
 
-#### MQTT Characteristics
+### MQTT Characteristics
 
 - Binary
 - Efficient, the smallest package is 2 bytes
@@ -62,14 +73,14 @@ Today we use MQTT 3.1.1 as the industry standard which is also ISO certified.
 - Built for push communication, with the broker principle
 - Suitable for constrained devices, MQTT requires so little device requirements are very low.
 
-#### MQTT is build on top of TCP
+### MQTT is build on top of TCP
 
 - MQTT reuires TCP/IP
 - Persistent TCP connections (numbered packages and acknowledgements)
 - Heartbeat mechanism is built into it which will re-establish a broken connection
 - Security on transport level (TLS)
 
-#### MQTT Publish / Subscribe pattern (PUB/SUB for short)
+### MQTT Publish / Subscribe pattern (PUB/SUB for short)
 
 - Client / Server protocol - Client Sends a request to the server, server sends a response.
 - The MQTT way of doing this is with the publish/subscribe pattern. MQTT Clients publish to a MQTT broker, the broker then sends data to the interested subscribers which are also MQTT clients. These clients can also be publishers since is bi-directional.
@@ -100,7 +111,7 @@ Today we use MQTT 3.1.1 as the industry standard which is also ISO certified.
 - The broker then responds with a UNSUBACK
 
 ### Best practices
-#### Topics
+### Topics
 Topic is a UTF8-String, the topic consits of multiple levels.
 ```USA/Califonia/SanFrancisco``` 
 This is a topic with 3 levels divided by the delimeter '/'. Topics are case sensitive. Clients can publish to any topic and thus they don't need to be pre-defined.
@@ -126,7 +137,7 @@ Best practices for Topics
 
 ## MQTT Questions
 
-#### Questions 1 - 3
+### Questions 1 - 3
 1. 1999
 2. MQTT doesnt stand for anything today, but it used to stand for Message Queuing Telemetry Transport
 3. OASIS and ISO
@@ -136,7 +147,7 @@ Best practices for Topics
 7. Space, time and syncronization decoupling.
 8. No, it uses Publish/Subscribe
 
-#### Questions 4 - 6
+### Questions 4 - 6
 1. PUB/SUB is very scalable and supports decoupling which is highly persistent in regards to loosing/gaining connections and keeping connectivity. Requires less resources than HTTP, it's binary (Data-agnostic).
 2. MQTT is the application layer, TLS in the presentation Layer, TCP in the transport layer, IP in the network layer, WIFI/Ethernet...etc... in the Datalink and physical layer.
 3. See [Connection flow](#connection-flow)

@@ -37,6 +37,7 @@ int        port     = MQTT_BROKER_PORT;
 const char topic[]  = "board/controller/#";
 uint32_t delayMS;
 
+// Used to control the RGB on the wifi module of the board
 void rgbColor(int r, int g, int b) {
         WiFiDrv::analogWrite(26, r);   //RED
         WiFiDrv::analogWrite(25, g); //GREEN
@@ -65,7 +66,7 @@ void setup() {
   WiFiDrv::pinMode(25, OUTPUT); //define GREEN LED
   WiFiDrv::pinMode(26, OUTPUT); //define RED LED
   WiFiDrv::pinMode(27, OUTPUT); //define BLUE LED
-  // engine.attach(A4);
+  engine.attach(2);
 
 
   Serial.begin(9600);
@@ -73,11 +74,12 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-  dht.begin();
-  sensor_t sensor;
-  dht.temperature().getSensor(&sensor);
-  dht.humidity().getSensor(&sensor);
-  delayMS = sensor.min_delay / 1000;
+  // For DHT11 Sensor
+  // dht.begin();
+  // sensor_t sensor;
+  // dht.temperature().getSensor(&sensor);
+  // dht.humidity().getSensor(&sensor);
+  // delayMS = sensor.min_delay / 1000;
 
   Serial.print("Attempting to connect to WPA SSID: ");
   rgbColor(255, 0, 0);
@@ -95,7 +97,7 @@ void setup() {
   mqttClient.setId(MQTT_CLIENT_ID);
   mqttClient.setUsernamePassword(MQTT_BROKER_USERNAME, MQTT_BROKER_PASSWORD);
 
-  //Eventhandler
+  //Eventhandler for recieving messages
   mqttClient.onMessage(youHaveBeenCommanded);
 
   Serial.print("Connecting to broker:");
@@ -109,6 +111,9 @@ void setup() {
   }
 
   Serial.println("Connected to the broker.");
+  mqttClient.beginMessage("status/");
+  mqttClient.print("Hello from the board!");
+  mqttClient.endMessage();
   rgbColor(0, 0, 255);
   Serial.println();
 
@@ -140,9 +145,10 @@ void sendData(){
 }
 
 void loop() {
+  mqttClient.poll();
   delay(delayMS);
   if(!mqttClient.connected()){
     rgbColor(255, 255, 0);
   };
-  sendData();
+  // sendData();
 }
