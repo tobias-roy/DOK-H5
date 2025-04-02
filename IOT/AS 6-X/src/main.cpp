@@ -31,10 +31,12 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 Servo engine;
 sensor_t sensor;
 int engine_pos;
+bool willReset;
 
 const char broker[] = MQTT_BROKER_ADDRESS;
 int        port     = MQTT_BROKER_PORT;
-const char topic[]  = "board/controller/#";
+// const char topic[]  = "board/controller/#";
+const char topic[]  = "arduino/in";
 uint32_t delayMS;
 
 // Used to control the RGB on the wifi module of the board
@@ -62,7 +64,17 @@ void youHaveBeenCommanded(int _) {
   }
 }
 
+void recievedMessage(int _) {
+  Serial.print("Message arrived on topic: ");
+  Serial.println(topic);
+  Serial.print("Message: ");
+  while (mqttClient.available()) {
+    Serial.print((char)mqttClient.read());
+  };
+} 
+
 void setup() {
+  willReset = false;
   WiFiDrv::pinMode(25, OUTPUT); //define GREEN LED
   WiFiDrv::pinMode(26, OUTPUT); //define RED LED
   WiFiDrv::pinMode(27, OUTPUT); //define BLUE LED
@@ -73,6 +85,17 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
+  
+  //MQTT setup
+  mqttClient.setId(MQTT_CLIENT_ID);
+  mqttClient.setUsernamePassword(MQTT_BROKER_USERNAME, MQTT_BROKER_PASSWORD);
+  mqttClient.setCleanSession(false);
+
+  //LWT
+  String willPayload = "offline";
+  mqttClient.beginWill("arduino/status", willPayload.length(), false, 1);
+  mqttClient.print(willPayload);
+  mqttClient.endWill();
 
   // For DHT11 Sensor
   // dht.begin();
@@ -93,12 +116,9 @@ void setup() {
   Serial.println("You're connected to the network");
   Serial.println();
 
-  //MQTT setup
-  mqttClient.setId(MQTT_CLIENT_ID);
-  mqttClient.setUsernamePassword(MQTT_BROKER_USERNAME, MQTT_BROKER_PASSWORD);
 
   //Eventhandler for recieving messages
-  mqttClient.onMessage(youHaveBeenCommanded);
+  mqttClient.onMessage(recievedMessage);
 
   Serial.print("Connecting to broker:");
   Serial.println(broker);
@@ -106,9 +126,9 @@ void setup() {
   if (!mqttClient.connect(broker, port)) {
     Serial.print("MQTT connection failed! Error code = ");
     Serial.println(mqttClient.connectError());
-
     while (1);
-  }
+  };
+
 
   Serial.println("Connected to the broker.");
   mqttClient.beginMessage("status/");
@@ -144,11 +164,36 @@ void sendData(){
   mqttClient.endMessage();
 }
 
+void sendMessage() {
+  // Send message to the broker
+  Serial.print(F("Sending message: "));
+  Serial.println("Hello from the board!");
+  // Send message to the broker
+  mqttClient.beginMessage("arduino/out", false, 1, false) ;
+  mqttClient.print("Hello from the board!" + String(random(0, 100)));
+  mqttClient.endMessage();
+  // Message sent
+  Serial.println(F("Message sent!"));
+}
+
+void clearWill() {
+  // Send message to the broker
+  if (!willReset)
+  {
+    mqttClient.beginMessage("arduino/status", true, 1, false) ;
+    mqttClient.print("");
+    mqttClient.endMessage();
+    Serial.println(F("Will reset"));
+    willReset = true;
+  }
+  
+}
+
 void loop() {
   mqttClient.poll();
-  delay(delayMS);
   if(!mqttClient.connected()){
     rgbColor(255, 255, 0);
   };
-  // sendData();
+  clearWill();
+  delay(5000);
 }

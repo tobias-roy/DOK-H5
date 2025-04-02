@@ -49,7 +49,38 @@ Assignment 6.6 - Controlling the servo via HiveMQ is also the same as the previo
 
 ## Day 3
 
+Continued with the assignments from yesterday
 
+Assignment 7.1 - QoS and CleanSession on PC 
+
+Assignment 7.2 - QoS and CleanSession on Arduino
+
+Assignment 7.3 - Retained Messages
+
+Assignment 7.4 - Retained Messages with Arduino
+
+Assignment 7.5 & 7.6 - Last Will and Testament 
+
+Assignment 7.7 Client Takeover
+
+Quiz
+
+## Svendeprøve forløb
+Gruppe fremlæggelse 12 minutter - fungere som en demonstration af det produkt man har lavet, det fungere som en salgsfremstilling. Alle skal have taletid etc.
+
+Individuelle fremlæggelser 40 minutter inkl. votering (5min), 35min præsentation inkl spørgsmål. - der udvælges et emne fra projektet at snakke ud fra. Det er vigtigt at det tager udgangspunkt i projektet. Regn med 30 minutter og hav en lille ekstra ting man kan præsentere og forvent at blive afbrudt i det.
+
+Det nye er at den personlige fremlæggelse får fjernet nogle minutter - 3 minutter fra hver præsentation ca.
+
+Det personlige emne eller teknologi der vælges kan være f.eks Kryptering, Authentication & Authorization, SignalR
+
+Kom ned på protokol niveau - brug evt. wireshark til visualisering af 0-1 bits i trafikken.
+
+Byg udfordringer/problemer og løsninger ind i fremlæggelsen for at visualisere tilgangen til at imødekomme den "korrekte" løsning.
+
+Det Egon syntes er spændende er: Kombinationen af openAI i dit eget software, services osv.
+
+Mini svendeprøven er en todelt case.
 
 # Notes
 ### MQTT 
@@ -129,11 +160,118 @@ Best practices for Topics
 - Never subscribe to root #
 
 ### QoS
-- QoS 0, messages sent once then lost
-- QoS 1, messages repeatedly sent until an ACK is recieved from the destination duplicate possibility
-- QoS 2, messages repeatedly sent until an ACK is recieved, without duplicate
+QoS ensures guaranties between the publisher and subscriber. 
+- QoS 0, messages sent once then lost (At most once delivery) - used when you don't need to que any messages, where loss is acceptable. This could be used for sending metrics constantly.
+- QoS 1, messages repeatedly sent until an ACK is recieved from the destination duplicate possibility (At least once delivery) - usual default, great tradeoff between bandwidth and delivery guarantee.
+- QoS 2, messages repeatedly sent until an ACK is recieved, without duplicate (Exactly once delivery) - When you wan't exactly one and only one.
+
+### Persistent Sessions and Queueing
+The Connect package carries the 'cleanSession' flag. If this is false you tell the broker you want a persistent connection that the broker will remember.
+
+The broker will remember the Session data (clientID) - Subscriptions from the client - Unacknowledgted QoS messages - Queued messages
+
+Messages are queued per client - The broker queues all QoS 1 and 2 messages when a persistent session client is offline
+
+Best practices
+
+ - A pæersistent session is recommended for subscribe and subscribe/publish clients. 
+
+ - Clean session TRUE is recommended when a client only needs to publish and message loss is acceptable.
+ - Persistent Session is recommended when subscribers must not miss messages and the broker should store subscription information
+
+Retained messages will be retained for each new subscriber to a specific topic.
 
 
+### Last Will
+If a client looses network connection a message will be sent out according to the lastWill setup in the CONNECT packet.
+
+The lastWillTopic is the topic the lastWillMessage will be sent on. LastWillQos defines the QoS of the message and the lastWillRetain is set to wether or not new subscribers to the topic will get the retained message.
+
+Cases for LWT
+
+- If the client fails to send a packet within the Keep Alive period the LWT will be used.
+
+- If the client does not send a DISCONNECT packet.
+
+- If the broker closes the connection (protocol errors)
+
+Keepalive max time is 18 Hrs
+
+Client takeover will happen if a client established a connection with an already used client ID. The broker will in this case close the old connection and establish a new one.
+
+Best practices
+
+- Use uniqeu CLientIds
+- Authenticate clients to prevent unwanted Client Takeovers
+
+
+### Packets
+|CONNECT||
+|---|---|
+|clientId|"client1"|
+|cleanSession|true|
+|username|"hans"|
+|password|"letmein"|
+|lastWillTopic|"/hans/will"|
+|lastWillQos|2|
+|lastWillMessage|"unexpected exit"|
+|lastWillRetain|false|
+|keepAlive|60|
+---
+
+|CONNACK||
+|---|---|
+|sessionPresent|true|
+|returnCode|0|
+
+---
+
+|Publish||
+|---|---|
+|clientId|"client1"|
+|topicName|"client/status"|
+|payloadFormatIndicator|1|
+|contentType|SolarPanelSchemaV1.0|
+|qos|1|
+|retainFlag|true|
+|payload|"online"|
+
+---
+
+|SUBSCRIBE||
+|---|---|
+|packetId|2313|
+|qos1|1|
+|topic1|"topic/1"|
+|qos2|0|
+|topic2|"topic/2"|
+|...|....|
+
+---
+
+|SUBACK||
+|---|---|
+|packetId|2313|
+|returnCode 1|2|
+|returnCode 2|0|
+|...|....|
+
+---
+
+|UNSUBSCRIBE||
+|---|---|
+|packetId|2313|
+|topic1|"topic/1"|
+|topic2|"topic/2"|
+|...|....|
+
+---
+
+|UNSUBACK||
+|---|---|
+|packetId|2313|
+
+---
 
 ## MQTT Questions
 
