@@ -14,6 +14,10 @@ This is a repository of the assignments during my H5 course - specifically for t
 
 [Day 2 - MQTT Continued](#day-2---mqtt-continued)
 
+[Day 3 - MQTT Continued](#day-3---mqtt-continued)
+
+[Day 4 - Project Startup](#day-4---project-startup)
+
 ## Day 1 - Introduction day
 Downloaded and installed [PlatformIO Core and PlatformIO extension](https://platformio.org/) for vscode.
 
@@ -47,7 +51,7 @@ Assignment 6.5 - Basicly the same as the previously 6 assignments just change th
 Assignment 6.6 - Controlling the servo via HiveMQ is also the same as the previous assignment
 
 
-## Day 3
+## Day 3 - MQTT Continued
 
 Continued with the assignments from yesterday
 
@@ -64,6 +68,13 @@ Assignment 7.5 & 7.6 - Last Will and Testament
 Assignment 7.7 Client Takeover
 
 Quiz
+
+
+## Day 4 - Project startup
+Quick repetitions
+
+Project startup
+
 
 ## Svendeprøve forløb
 Gruppe fremlæggelse 12 minutter - fungere som en demonstration af det produkt man har lavet, det fungere som en salgsfremstilling. Alle skal have taletid etc.
@@ -165,7 +176,7 @@ QoS ensures guaranties between the publisher and subscriber.
 - QoS 1, messages repeatedly sent until an ACK is recieved from the destination duplicate possibility (At least once delivery) - usual default, great tradeoff between bandwidth and delivery guarantee.
 - QoS 2, messages repeatedly sent until an ACK is recieved, without duplicate (Exactly once delivery) - When you wan't exactly one and only one.
 
-### Persistent Sessions and Queueing
+### Persistent Sessions and Queueing (cleanSession Flag)
 The Connect package carries the 'cleanSession' flag. If this is false you tell the broker you want a persistent connection that the broker will remember.
 
 The broker will remember the Session data (clientID) - Subscriptions from the client - Unacknowledgted QoS messages - Queued messages
@@ -196,6 +207,8 @@ Cases for LWT
 - If the broker closes the connection (protocol errors)
 
 Keepalive max time is 18 Hrs
+
+### Client takeover
 
 Client takeover will happen if a client established a connection with an already used client ID. The broker will in this case close the old connection and establish a new one.
 
@@ -290,4 +303,42 @@ Best practices
 2. MQTT is the application layer, TLS in the presentation Layer, TCP in the transport layer, IP in the network layer, WIFI/Ethernet...etc... in the Datalink and physical layer.
 3. See [Connection flow](#connection-flow)
 4. See [Connection flow](#connection-flow)
+
+
+
+
+
+# Project
+
+DHT11 -> MKR -> HiveMQ data (PUB)
+HiveMQ -> MKR -> Servo (SUB)
+
+REST WebApi integration with MQTT - getting and posting to and from HiveMQ
+
+The rest API should subscribe/get data from the MQTT broker, temperature etc. from DHT11
+
+The rest API should be able to post to make the servo motor move
+
+HiveMQ Api for information of Subscribers and Publishers: https://docs.hivemq.com/hivemq/latest/rest-api/index.html
+
+InfluxDB
+
+
+
+## Project start
+
+- Repository share, HiveMQ Broker
+- Access Management HiveMQ
+- USR/PW - RestAPI - restapiAdmin1234
+- USR/PW - MKRTEL - mkrAdmin1234
+
+---
+
+- API, bliver Minimal API - Andrias
+- InfluxDB, Dennis startup
+- Mkr kode integration, Tobias
+
+--- 
+
+Branch ud når der tilføjes - saml i master
 
