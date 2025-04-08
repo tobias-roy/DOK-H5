@@ -1,13 +1,17 @@
-# IOT H5 Data-technician
+∏# IOT H5 Data-technician
 
 This is a repository of the assignments during my H5 course - specifically for the class IOT & Embedded 3.
 
 ## Shortcuts
 [Notes](#notes) - this will lead you to all notes
 
+[Mini Svendeprøve](#mini-svendeprøve)
+
 [MQTT Basics](#mqtt)
 
 [MQTT Questions](#mqtt-questions)
+
+[MKR MQTT Group Project](#project)
 
 # Worklog
 [Day 1 - Introduction day](#day-1---introduction-day)
@@ -17,6 +21,10 @@ This is a repository of the assignments during my H5 course - specifically for t
 [Day 3 - MQTT Continued](#day-3---mqtt-continued)
 
 [Day 4 - Project Startup](#day-4---project-startup)
+
+[Day 5 - Project Ending](#day-5---project-ending)
+
+[Day 6 - Azure IOT Hub](#day-6---azure-iot-hub)
 
 ## Day 1 - Introduction day
 Downloaded and installed [PlatformIO Core and PlatformIO extension](https://platformio.org/) for vscode.
@@ -75,6 +83,23 @@ Quick repetitions
 
 Project startup
 
+[MKR MQTT Group Project](#project)
+
+
+## Day 5 - Project ending
+
+Project ending
+
+[MKR MQTT Group Project](#project)
+
+
+## Day 6 - Azure IOT Hub
+
+Theory about Azure
+
+Short case introduction for the *Mini svendeprøve*
+
+
 
 ## Svendeprøve forløb
 Gruppe fremlæggelse 12 minutter - fungere som en demonstration af det produkt man har lavet, det fungere som en salgsfremstilling. Alle skal have taletid etc.
@@ -94,6 +119,10 @@ Det Egon syntes er spændende er: Kombinationen af openAI i dit eget software, s
 Mini svendeprøven er en todelt case.
 
 # Notes
+### General
+
+= at the end of a string typically indicates the format is BASE64
+
 ### MQTT 
 The lightweigh data transfer protocol. Developed for transfering machine telemetry with minimal battery loss and minimal bandwidth. It's data agnostic because it transfers binary data. The MQTT requirements are the requirements we also have to IoT today: 
 
@@ -151,6 +180,42 @@ Today we use MQTT 3.1.1 as the industry standard which is also ISO certified.
 - It sends this packet to the broker which responds with a SUBACK packet.
 - The client can also send a UNSUBSCRIBE packet, which consists of the topics you want to ubsubscribe from.
 - The broker then responds with a UNSUBACK
+
+### Sending MQTT 
+[Microsofts documentation on the topic](https://learn.microsoft.com/en-us/azure/iot/iot-mqtt-connect-to-iot-hub#use-the-mqtt-protocol-directly-from-a-device)
+
+#Define the secret broker the hub.azure-devices.net"
+
+#define secret_device_id "match-device-on-cloud"
+
+The device needs a self-signet x509 certificate it uses a primary thumbprint and a secondary thumbprint for the auth.
+
+The privatekey is stored on the board in the cryptographic chip in front of the WiFi module. The ATECC508A chip.
+This is the certificate for Board 4 in the classroom for WifiNINA v.1.5.0:
+
+````
+-----BEGIN CERTIFICATE-----
+
+MIIBLDCB06ADAgECAgEBMAoGCCqGSM49BAMCMB0xGzAZBgNVBAMTEjAxMjMzMzhERDRDQzVFNjdF
+
+RTAgFw0yMzAzMjUxMjAwMDBaGA8yMDU0MDMyNTEyMDAwMFowHTEbMBkGA1UEAxMSMDEyMzMzOERE
+
+NENDNUU2N0VFMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc+i0fakUywH+ffuc3wBeaM5vBlhA
+
+GTwFESFZLZkcS9vL/4J/A3dayFR5IqxLwjBnA2kJd+DnNCl5m4j3WlLozKMCMAAwCgYIKoZIzj0E
+
+AwIDSAAwRQIhAKjXzeshH7VLYP4jXm+oToLepXyahQt8HBuaB1C1u4vxAiA+Yeju8VxkElCWD9Hw
+
+C68yWYsczteajrF1X2WdG7fyKw==
+
+-----END CERTIFICATE----- 
+````
+This is the __Certificate thumbprint__
+
+SHA1: __1568a9e564097b18aa6b9e9c685fca35812ce291__
+
+----
+We will need the base64 encoding at some point in the assignemnt
 
 ### Best practices
 ### Topics
@@ -305,9 +370,6 @@ Best practices
 4. See [Connection flow](#connection-flow)
 
 
-
-
-
 # Project
 
 DHT11 -> MKR -> HiveMQ data (PUB)
@@ -340,5 +402,48 @@ InfluxDB
 
 --- 
 
-Branch ud når der tilføjes - saml i master
 
+# Azure IOT Hub
+
+![Microsoft Cloud Models](readmeImages/cloudmodels.png)
+
+IAAS - Infrastructure as a Service
+
+PAAS - Platform as a Service
+
+SAAS - Software as a Service
+
+The free tier we use for our IoT hub has 8.000 messages per hub per day.
+
+Device twin contains properties for *desired* values and *reported* values. If your desired value for temperature is 22 degress but the reaported temperature is 18 degrees, this could cause other IoT devices to boot and produce heat.
+
+
+### Iot hub
+<img src="readmeImages/iothub.png" width="auto" height="250"/>
+
+
+
+## Mini svendeprøve
+We are going to create a prototype to a wristband used in a themepark.
+
+The wristband contains 3 buttons and a display.
+- Happy Smiley
+- Sad Smiley
+- Emergency button
+- Display for showing notifications etc.
+
+
+The wristband should be able to:
+- Track guests location
+- Real-time communication (Feedback and park notifications)
+
+We will be using HiveMQ - Make use of the HiveMQ API for tracking devices.
+
+The pipeline consists of 4 steps.
+ 
+<img src="readmeImages/globo.png" width="auto" height="250" />
+
+Checklist:
+- Documentation: Create a naming convention for Device ID's
+- Documentation: Security measures and steps
+- Documentation: 
