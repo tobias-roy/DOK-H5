@@ -99,6 +99,14 @@ Theory about Azure
 
 Short case introduction for the *Mini svendeprøve*
 
+Working on assignemnts for creating azure IoT stuff.
+
+Created PowerBI solutions
+
+## Day 7 - Azure IOT Hub
+
+Continuing working Azure IoT hub.
+
 
 
 ## Svendeprøve forløb
@@ -415,27 +423,151 @@ SAAS - Software as a Service
 
 The free tier we use for our IoT hub has 8.000 messages per hub per day.
 
-Device twin contains properties for *desired* values and *reported* values. If your desired value for temperature is 22 degress but the reaported temperature is 18 degrees, this could cause other IoT devices to boot and produce heat.
+### Device Twin
+
 
 
 ### Iot hub
 <img src="readmeImages/iothub.png" width="auto" height="250"/>
 
+Message routing is comparable to the *topics* in MQTT. In Azure we have a lot of functionality that we can use without the need for actual programming.  
 
+## Routing Query Syntax
+
+<img src="readmeImages/routingquery.png" width="auto" height="250">
+
+
+
+## .NET Virtual IoT Device (Device Twins)
+C# Device clients interaction with Azure
+
+<img src="readmeImages/devicetwincsharp.png" width="auto" height="250">
+
+Device twin contains properties for *desired* values and *reported* values. If your desired value for temperature is 22 degress but the reaported temperature is 18 degrees, this could cause other IoT devices to boot and produce heat.
+
+Device twins can contain tags - tags can be used to define what specific device we are connected to. It can be used to specify Country/Region/City/Building etc..
+
+## IoT Hub Partitions
+
+<img src="readmeImages/partitions.png" width="auto" height="250">
+
+
+We can have a maximum amount of 32 Partitions per IoT Hub. 
+
+<img src="readmeImages/consumergroups.png" width="auto" height="320">
+
+Consumer groups are used by applications to pull data from the IoT Hub.
+
+Each consumer group has its own settings for state, position and offset for each partition. The "Checkpoints" marked act as an indicator to show where in the datastream each partition is at the moment. Look at it as a Super Mario checkpoint.
+
+## Event Processor Host
+<img src="readmeImages/eventprocessor1.png" width="auto" height="200">
+<img src="readmeImages/eventprocessor2.png" width="auto" height="200">
+<img src="readmeImages/eventprocessor3.png" width="auto" height="200">
+
+Event processor Host scaling can be viewed as a form of cluster.
+
+## AMQP Protocol
+Advanced Message Queuing Protocol, created in 2003 by J.P. Morgan Chase, for systems that require a high level of reliability and functionality.
+
+A PEER-to-PEER protocol between Producer and Consumer. Messages are sent to exchanges, which then route the messages to apporpriate queues based on rulse called bindings. The consumer then retrieves the message from the queue. This model allows for complex routing and distribution strategies.
+
+## Messaging to devices
+<img src="readmeImages/m2d.png" width="auto" height="250" />
+
+Cloud to device message is a text message being sent to devices from the Cloud. It works for offline devices because a que per device is being created.
+
+Direct Method is a function on the device being activated by the cloud. A use case could be to activate haptic feedback.
+
+Device Twins is used for long running commands where things should "happen" like the temperature regulator case.
+
+## DPS - Device Provisioning Service
+
+<img src="readmeImages/dps.png" width="auto" height="250" />
+
+The diagram shows how DPS functions. The DPS is sort of a handler for devices. It will aid in the creation of devices for the HUB.
 
 ## Mini svendeprøve
 We are going to create a prototype to a wristband used in a themepark.
 
 The wristband contains 3 buttons and a display.
-- Happy Smiley
-- Sad Smiley
-- Emergency button
-- Display for showing notifications etc.
+- Happy Smiley - Sends JSON
+- Sad Smiley - Sends JSON
+- Emergency button - Sends JSON
+- Display - Recieves JSON for function printMsg()
+
+```
+//Happy and sad
+{
+    "fb": 1, //1 for Happy 0 for sad
+    "gps": "lat, long"
+}
+```
+
+```
+// Alert
+{
+    "alert": "1",
+    "gps":"lat, long"
+}
+```
+
+```
+//Display printMsg
+{
+    "msg": "This is a message!"
+}
+```
+
+On the board we have a Heartbeat function. The API will send a "Request heartbeat" request to a topic that all devices subsribe too - the device will then resbond with a JSON object: 
+```
+{
+    "bat": 23,
+    "gps": "lat, long"
+}
+```
+
+## Topics
+
+```
+//From top to bottom level
+wristband/
+
+wristband/{deviceid}
+
+wristband/{deviceid}/heartbeat/out //C2D
+wristband/{deviceid}/heartbeat/in //D2C
+
+wristband/{deviceid}/feedback //D2C
+
+wristband/{deviceid}/emergency //D2C
+
+wristband/announcement //C2D for messaging to all devices
+wristband/announcement/{deviceid} //C2D for messaging to specific devices
+```
+## Pre-requisites
+We will implement:
+- Github Actions
+- Api hosting on Azure?
+
+
+
+### Assignments
+
+Andrias - WebApi
+
+Emma - WebApi, Kravspecifikation
+
+Tobias - UI blazor WASM
+
+Dennis - Makerboard
+
+
 
 
 The wristband should be able to:
 - Track guests location
-- Real-time communication (Feedback and park notifications)
+- Real-time communication (Feedback and park notifications) we want to be able to send anything from the "central" to all park guests.
 
 We will be using HiveMQ - Make use of the HiveMQ API for tracking devices.
 
@@ -443,7 +575,12 @@ The pipeline consists of 4 steps.
  
 <img src="readmeImages/globo.png" width="auto" height="250" />
 
-Checklist:
+As little as possible should be handled on the board itself.
+
+
+
+
+Checklist (On-going TODO):
 - Documentation: Create a naming convention for Device ID's
 - Documentation: Security measures and steps
 - Documentation: 
