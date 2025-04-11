@@ -487,6 +487,11 @@ Device Twins is used for long running commands where things should "happen" like
 
 The diagram shows how DPS functions. The DPS is sort of a handler for devices. It will aid in the creation of devices for the HUB.
 
+The device needs to know three things. Registration ID, Primary key and 
+
+## IIoT
+Industrial Internet of Things - 
+
 ## Mini svendeprøve
 We are going to create a prototype to a wristband used in a themepark.
 
