@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CRUD_MVVM.Views.ListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:CRUD_MVVM.Models"
+    xmlns:vm="clr-namespace:CRUD_MVVM.ViewModels"
+    Title="ListPage"
+    x:DataType="vm:ListPageViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding GoToAddEditCommand}" Text="ADD" />
+    </ContentPage.ToolbarItems>
+
+    <CollectionView ItemsSource="{Binding Persons}" SelectionMode="None">
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:Person">
+                <Grid Padding="10">
+                    <Border HeightRequest="80">
+
+                        <!--  Add the Gesture Recognizer  -->
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListPageViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+
+                        <VerticalStackLayout Padding="10">
+                            <Label Text="{Binding Name}" />
+                            <Label Text="{Binding Age, StringFormat='{0:} år'}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+</ContentPage>
