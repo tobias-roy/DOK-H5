@@ -13,13 +13,11 @@
     </ContentPage.ToolbarItems>
 
     <CollectionView ItemsSource="{Binding Persons}" SelectionMode="None">
-
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="models:Person">
                 <Grid Padding="10">
                     <Border HeightRequest="80">
 
-                        <!--  Add the Gesture Recognizer  -->
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ListPageViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
@@ -33,5 +31,4 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
-
 </ContentPage>

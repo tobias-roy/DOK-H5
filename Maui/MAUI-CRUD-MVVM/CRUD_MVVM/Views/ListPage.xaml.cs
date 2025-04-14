@@ -15,6 +15,6 @@ public partial class ListPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        vm.GetPersonsCommand.Execute(null);
+        vm.GetPersonCommand.Execute(null);
     }
 }

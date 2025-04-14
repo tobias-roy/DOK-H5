@@ -11,8 +11,7 @@
 
     <VerticalStackLayout
         Padding="30,0"
-        Spacing="25"
-        VerticalOptions="Start">
+        Spacing="25">
 
         <Entry
             FontSize="32"
@@ -24,7 +23,7 @@
             FontSize="18"
             HorizontalOptions="Start"
             Placeholder="Age"
-            Text="{Binding Person.Age, Converter={converter:DoNothingConverter}}" />
+            Text="{Binding Person.Age}" />
 
         <HorizontalStackLayout Spacing="20">
             <Button

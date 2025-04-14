@@ -1,19 +1,16 @@
-﻿using CRUD_MVVM.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CRUD_MVVM.Models;
 using CRUD_MVVM.Services;
 using CRUD_MVVM.Views;
-using System.Windows.Input;
 
 namespace CRUD_MVVM.ViewModels;
 
 [QueryProperty(nameof(Person), "MyPerson")]
-public class DetailsPageViewModel : BaseViewModel
+public partial class DetailsPageViewModel : BaseViewModel
 {
-    Person person;
-    public Person Person
-    {
-        get => person;
-        set => SetProperty(ref person, value);
-    }
+    [ObservableProperty]
+    public partial Person Person{get; set;}
 
     private readonly IDataService service;
     public DetailsPageViewModel(IDataService service)
@@ -21,23 +18,21 @@ public class DetailsPageViewModel : BaseViewModel
         this.service = service;
     }
 
-    private Command goToAddEditCommand;
-    public ICommand GoToAddEditCommand => goToAddEditCommand ??= new Command(async () =>
-    {
+    [RelayCommand]
+    private async Task GoToAddEdit() {
         await Shell.Current.GoToAsync(nameof(AddEditPage), true, new Dictionary<string, object>
         {
             {"MyPerson", Person }
         });
-    });
+    }
 
-    private Command deleteCommand;
-    public ICommand DeleteCommand => deleteCommand ??= new Command(async () =>
-    {
+    [RelayCommand]
+    private async Task Delete(){
         bool answer = await Shell.Current.DisplayAlert("DELETE?", "Are you sure?", "Ok", "Cancel");
         if (answer)
         {
             service.DeletePerson(Person);
         }
         await Shell.Current.GoToAsync("..");
-    });
+    }
 }

@@ -1,4 +1,5 @@
-﻿using CRUD_MVVM.Models;
+﻿using CommunityToolkit.Mvvm.Input;
+using CRUD_MVVM.Models;
 using CRUD_MVVM.Services;
 using CRUD_MVVM.Views;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 
 namespace CRUD_MVVM.ViewModels;
-public class ListPageViewModel : BaseViewModel
+public partial class ListPageViewModel : BaseViewModel
 {
     private readonly IDataService service;
     public ListPageViewModel(IDataService service)
@@ -15,10 +16,12 @@ public class ListPageViewModel : BaseViewModel
     }
     public ObservableCollection<Person> Persons { get; } = new();
 
-    private Command getPersonsCommand;
-    public ICommand GetPersonsCommand => getPersonsCommand ??= new Command(async () => await GetPersonsAsync());
+    [RelayCommand]
+    private async Task GetPerson(){
+        await GetPersonsAsync();
+    }
 
-    async Task GetPersonsAsync()
+    private async Task GetPersonsAsync()
     {
         if (IsBusy)
             return;
@@ -47,9 +50,8 @@ public class ListPageViewModel : BaseViewModel
         }
     }
 
-    private Command goToDetailsCommand;
-    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command<Person>(async (person) =>
-    {
+    [RelayCommand]
+    private async Task GoToDetails(Person person){
         if (person == null)
             return;
 
@@ -57,15 +59,13 @@ public class ListPageViewModel : BaseViewModel
         {
             {"MyPerson", person }
         });
-    });
+    }
 
-    private Command goToAddEditCommand;
-
-    public ICommand GoToAddEditCommand => goToAddEditCommand ??= new Command(async () =>
-    {
+    [RelayCommand]
+    private async Task GoToAddEdit(){
         await Shell.Current.GoToAsync(nameof(AddEditPage), true, new Dictionary<string, object>
         {
             {"MyPerson", new Person() }
         });
-    });
+    }
 }

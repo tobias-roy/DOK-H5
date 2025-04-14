@@ -1,18 +1,11 @@
-﻿namespace CRUD_MVVM.Models;
-public class Person : BaseModel
-{
-    string name;
-    public string Name
-    {
-        get { return name; }
-        set { SetProperty(ref name, value); }
-    }
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-    int age;
-    public int Age
-    {
-        get { return age; }
-        set { SetProperty(ref age, value); }
-        //set { age = value; }  // test for at se at INPC er nødvendig
-    }
+namespace CRUD_MVVM.Models;
+public partial class Person : BaseModel
+{
+    [ObservableProperty]
+    public partial string Name {get; set;}
+
+    [ObservableProperty]
+    public partial int Age{get; set;}
 }
