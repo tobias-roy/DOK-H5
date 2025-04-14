@@ -1,0 +1,5 @@
+arduino-libraries/WiFiNINA
+arduino-libraries/ArduinoMqttClient
+adafruit/DHT sensor library@^1.4.6
+arduino-libraries/Servo
+arduino-libraries/ArduinoBearSSL
