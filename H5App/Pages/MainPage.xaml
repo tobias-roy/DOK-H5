@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="H5App.Pages.MainPage"
+             xmlns:pagemodel="clr-namespace:H5App.PageModels"
+             xmlns:model="clr-namespace:H5App.Models"
+             x:DataType="pagemodel:TodoListPageModel"
+             Title="Todo List">
+
+    <Grid RowDefinitions="*,Auto">
+        <RefreshView Grid.Row="0" 
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding LoadTodoItemsCommand}">
+            <CollectionView ItemsSource="{Binding TodoItems}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TodoItem">
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Complete"
+                                               BackgroundColor="Green"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type pagemodel:TodoListPageModel}}, Path=MarkAsCompletedCommand}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Edit"
+                                               BackgroundColor="Orange"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type pagemodel:TodoListPageModel}}, Path=EditItemCommand}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid Padding="10" ColumnDefinitions="Auto,*">
+                                <Ellipse Grid.Column="0" 
+                                        WidthRequest="20" 
+                                        HeightRequest="20" 
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        Fill="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" />
+                                <Frame Grid.Column="1" Padding="10" Margin="10,5,0,5">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type pagemodel:TodoListPageModel}}, Path=ItemTappedCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                                        <Label Grid.Row="0" Grid.Column="0"
+                                            Text="{Binding Description}"
+                                            TextDecorations="{Binding Completed, Converter={StaticResource BoolToStrikethroughConverter}}"
+                                            FontSize="Medium" />
+                                        <Label Grid.Row="1" Grid.Column="0"
+                                            Text="{Binding CreatedTime, StringFormat='{0:g}'}"
+                                            FontSize="Small"
+                                            TextColor="Gray" />
+                                        <CheckBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                                                IsChecked="{Binding Completed}"
+                                                IsEnabled="False" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label Text="No todo items yet" FontSize="Large" TextColor="Gray" />
+                        <Label Text="Add some items to get started" FontSize="Medium" TextColor="Gray" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+
+        <Button Grid.Row="1"
+                Text="Add Todo Item"
+                Command="{Binding AddItemCommand}"
+                Margin="20"
+                HorizontalOptions="Fill" />
+    </Grid>
+</ContentPage>

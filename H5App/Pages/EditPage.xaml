@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="H5App.Pages.EditPage"
+             xmlns:pagemodel="clr-namespace:H5App.PageModels"
+             xmlns:model="clr-namespace:H5App.Models"
+             x:DataType="pagemodel:EditTodoItemPageModel"
+             Title="Edit Todo Item">
+
+    <VerticalStackLayout Spacing="20" Padding="20">
+        <Label Text="Description:" FontSize="Medium" />
+        <Entry Text="{Binding Description}" Placeholder="Enter description here" />
+        
+        <Label Text="Priority:" FontSize="Medium" />
+        <Picker ItemsSource="{Binding PriorityLevels}"
+                SelectedItem="{Binding Priority}" />
+        
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding Completed}" />
+            <Label Text="Mark as completed" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+            <Button Text="Delete" Command="{Binding DeleteCommand}" BackgroundColor="Red" />
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

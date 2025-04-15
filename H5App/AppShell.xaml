@@ -3,13 +3,13 @@
     x:Class="H5App.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:H5App"
-    Shell.FlyoutBehavior="Flyout"
-    Title="H5App">
+    xmlns:pages="clr-namespace:H5App.Pages"
+    Shell.FlyoutBehavior="Disabled"
+    Title="H5App-TodoApp">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        Title="Todo List"
+        ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
 
 </Shell>

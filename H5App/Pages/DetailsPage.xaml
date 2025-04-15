@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="H5App.Pages.DetailsPage"
+             xmlns:pagemodel="clr-namespace:H5App.PageModels"
+             xmlns:model="clr-namespace:H5App.Models"
+             x:DataType="pagemodel:TodoItemDetailsPageModel"
+             Title="Todo Item Details">
+
+    <Grid RowDefinitions="*,Auto">
+        <VerticalStackLayout Grid.Row="0" Spacing="20" Padding="20">
+            <Frame Padding="15" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{Binding TodoItem.Description}" FontSize="Large" />
+                    
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Created:" FontAttributes="Bold" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding TodoItem.CreatedTime, StringFormat='{0:g}'}" />
+                        
+                        <Label Grid.Row="1" Grid.Column="0" Text="Priority:" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding TodoItem.Priority}" />
+                        
+                        <Label Grid.Row="2" Grid.Column="0" Text="Status:" FontAttributes="Bold" />
+                        <Label Grid.Row="2" Grid.Column="1" 
+                              Text="{Binding TodoItem.Completed, Converter={StaticResource BoolToCompletedConverter}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+        
+        <HorizontalStackLayout Grid.Row="1" Spacing="10" HorizontalOptions="Center" Margin="0,0,0,20">
+            <Button Text="Edit" Command="{Binding GoToEditCommand}" />
+            <Button Text="Back" Command="{Binding GoBackCommand}" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

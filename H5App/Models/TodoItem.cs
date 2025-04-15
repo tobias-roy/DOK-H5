@@ -1,15 +1,9 @@
-using System.Diagnostics;
+namespace H5App.Models;
 
 public class TodoItem {
-    int Id {get; set;}
-    string? Description {get; set;}
-    DateTime CreatedTime {get; set;} = DateTime.UtcNow;
-    PriorityLevel Priority {get; set;}
-    bool Completed {get; set;} = false;
-}
-
-public enum PriorityLevel {
-    Low,
-    Normal,
-    High
+    public int Id {get; set;}
+    public string? Description {get; set;}
+    public DateTime CreatedTime {get; set;} = DateTime.UtcNow;
+    public PriorityLevel Priority {get; set;}
+    public bool Completed {get; set;} = false;
 }
